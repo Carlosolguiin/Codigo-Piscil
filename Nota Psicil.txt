@@ -1,0 +1,54 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Ingrese el numero de productos: ");
+        int numProductos = scanner.nextInt();
+        scanner.nextLine();
+
+        String[] nombres = new String[numProductos];
+        int[] cantidades = new int[numProductos];
+        double[] precios = new double[numProductos];
+
+        capturarDatos(scanner, numProductos, nombres, cantidades, precios);
+        double total = calcularTotal(numProductos, cantidades, precios);
+        mostrarNota(numProductos, nombres, cantidades, precios, total);
+
+        scanner.close();
+    }
+
+    public static void capturarDatos(Scanner scanner, int numProductos, String[] nombres, int[] cantidades, double[] precios) {
+        for (int i = 0; i < numProductos; i++) {
+            System.out.println("Producto " + (i + 1) + ":");
+            System.out.print("Nombre: ");
+            nombres[i] = scanner.nextLine();
+            System.out.print("Cantidad: ");
+            cantidades[i] = scanner.nextInt();
+            System.out.print("Precio unitario: ");
+            precios[i] = scanner.nextDouble();
+            scanner.nextLine();
+        }
+    }
+
+    public static double calcularTotal(int numProductos, int[] cantidades, double[] precios) {
+        double total = 0;
+        for (int i = 0; i < numProductos; i++) {
+            total += cantidades[i] * precios[i];
+        }
+        return total;
+    }
+
+    public static void mostrarNota(int numProductos, String[] nombres, int[] cantidades, double[] precios, double total) {
+        System.out.println("\nNota de compra");
+        System.out.printf("%-15s %-10s %-10s %-10s\n", "Producto", "Cantidad", "Precio", "Subtotal");
+        System.out.println("----------------------------------------");
+        for (int i = 0; i < numProductos; i++) {
+            double subtotal = cantidades[i] * precios[i];
+            System.out.printf("%-15s %-10d %-10.2f %-10.2f\n", nombres[i], cantidades[i], precios[i], subtotal);
+        }
+        System.out.println("----------------------------------------");
+        System.out.printf("Total: %.2f\n", total);
+        System.out.println("========================================");
+    }
+}
